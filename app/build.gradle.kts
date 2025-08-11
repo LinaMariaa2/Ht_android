@@ -40,6 +40,9 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    implementation(libs.retrfoit)
+    implementation(libs.retrofit)
     implementation(libs.converter.gson)
+
+    implementation("androidx.recyclerview:recyclerview:1.4.0")
+    implementation(libs.cardview)
 }

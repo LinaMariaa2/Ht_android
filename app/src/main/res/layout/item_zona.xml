@@ -14,7 +14,7 @@
         android:layout_marginTop="10dp">
 
         <TextView
-            android:id="@+id/tvNombreInv"
+            android:id="@+id/tvNombreZona"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nombre"
@@ -23,7 +23,7 @@
             />
 
         <TextView
-            android:id="@+id/tvDescripcionesInv"
+            android:id="@+id/tvDescripcionesZona"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Descripción"
@@ -31,7 +31,7 @@
             />
 
         <TextView
-            android:id="@+id/tvEstadpInv"
+            android:id="@+id/tvEstadoZona"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Estado"
@@ -39,29 +39,40 @@
             />
 
         <TextView
-            android:id="@+id/tvZonasTotalesInv"
+            android:id="@+id/tvIdInvernaderoZona"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Zonas Totales"
+            android:text="Id invernadero"
             android:layout_marginTop="5dp"
             />
 
-        <TextView
-            android:id="@+id/tvZonasActivasInv"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Zonas Activas"
-            android:layout_marginTop="5dp"
-            />
-
-        <Button
-            android:id="@+id/btnInvZonas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Gestionar Zonas"
             android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="@color/azul"
-            android:textColor="@color/white"/>
+            android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/btnIrProRiego"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Riego"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="@color/azul"
+                android:textColor="@color/white"/>
+            <Button
+                android:id="@+id/btnIrProIlu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Iluminacion"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="@color/azul"
+                android:textColor="@color/white"
+                android:layout_marginLeft="40dp"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

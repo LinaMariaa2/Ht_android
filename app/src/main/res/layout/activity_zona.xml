@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.InvernaderoActivity"
+    tools:context=".view.ZonaActivity"
     android:orientation="vertical">
 
     <TextView
@@ -13,13 +13,14 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20sp"
         android:layout_marginTop="60sp"
-        android:text="Invernaderos"
+        android:text="Zonas"
         android:textSize="40sp"
         />
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvInvernaderos"
+        android:id="@+id/rvZonas"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="16dp"/>
+
 
 </LinearLayout>
