@@ -1,6 +1,7 @@
 package com.example.hortitechv1.controllers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hortitechv1.R;
 import com.example.hortitechv1.models.Invernadero;
+import com.example.hortitechv1.models.ProgramacionIluminacion;
+import com.example.hortitechv1.models.ProgramacionRiego;
 import com.example.hortitechv1.models.Zona;
+import com.example.hortitechv1.view.ProgramacionIluminacionActivity;
+import com.example.hortitechv1.view.ProgramacionRiegoActivity;
+import com.example.hortitechv1.view.ZonaActivity;
 
 import java.util.List;
 
@@ -21,7 +27,6 @@ public class ZonaAdapter extends RecyclerView.Adapter<ZonaAdapter.ViewHolder> {
     private List<Zona> zonas;
     private List<Invernadero> listaInvernaderos;
     private Context context;
-
 
     public ZonaAdapter(Context context, List<Zona> zonas, List<Invernadero> invernaderos) {
         this.context = context;
@@ -50,11 +55,16 @@ public class ZonaAdapter extends RecyclerView.Adapter<ZonaAdapter.ViewHolder> {
 
 
         holder.btnRiego.setOnClickListener(v -> {
-
+            Intent intent = new Intent(context, ProgramacionRiegoActivity.class);
+            intent.putExtra("zona_id", zona.getId_zona());
+            context.startActivity(intent);
         });
 
+        // Botón para ir a programación de iluminación
         holder.btnIluminacion.setOnClickListener(v -> {
-
+            Intent intent = new Intent(context, ProgramacionIluminacionActivity.class);
+            intent.putExtra("zona_id", zona.getId_zona());
+            context.startActivity(intent);
         });
     }
 

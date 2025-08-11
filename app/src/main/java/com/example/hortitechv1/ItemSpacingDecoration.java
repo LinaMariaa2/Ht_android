@@ -19,7 +19,6 @@ public class ItemSpacingDecoration extends RecyclerView.ItemDecoration {
                                @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         outRect.bottom = spacing;
 
-        // Opcional: añadir margen arriba solo al primer ítem
         if (parent.getChildAdapterPosition(view) == 0) {
             outRect.top = spacing;
         }

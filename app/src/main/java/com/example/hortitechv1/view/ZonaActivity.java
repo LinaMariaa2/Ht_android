@@ -40,8 +40,15 @@ public class ZonaActivity extends AppCompatActivity {
         rvZonas.setLayoutManager(new LinearLayoutManager(this));
         rvZonas.addItemDecoration(new ItemSpacingDecoration(20));
 
-        // Primero obtener los invernaderos, luego las zonas
-        obtenerInvernaderos(() -> obtenerZonasDesdeApi());
+        // Obtener ID del invernadero desde el Intent
+        int id_invernadero = getIntent().getIntExtra("invernadero_id", -1);
+
+        if (id_invernadero != -1) {
+            obtenerInvernaderos(() -> obtenerZonasPorInvernadero(id_invernadero));
+        } else {
+            Toast.makeText(this, "Error: no se recibió ID de invernadero", Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     private void obtenerInvernaderos(Runnable onComplete) {
@@ -66,10 +73,9 @@ public class ZonaActivity extends AppCompatActivity {
         });
     }
 
-    private void obtenerZonasDesdeApi() {
+    private void obtenerZonasPorInvernadero(int invernaderoId) {
         ApiZona api = ApiClient.getClient().create(ApiZona.class);
-        Call<List<Zona>> call = api.getZonas();
-
+        Call<List<Zona>> call = api.getZonasPorInvernadero(invernaderoId);
         call.enqueue(new Callback<List<Zona>>() {
             @Override
             public void onResponse(Call<List<Zona>> call, Response<List<Zona>> response) {
@@ -89,4 +95,5 @@ public class ZonaActivity extends AppCompatActivity {
             }
         });
     }
+
 }

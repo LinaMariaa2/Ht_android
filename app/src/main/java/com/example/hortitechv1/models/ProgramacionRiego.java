@@ -1,0 +1,96 @@
+package com.example.hortitechv1.models;
+import java.time.LocalDateTime;
+
+public class ProgramacionRiego {
+    private int id_pg_riego;
+    private String descripcion;
+    private String tipo_riego;
+    private LocalDateTime fecha_inicio;
+    private LocalDateTime fecha_finalizacion;
+    private Zona id_zona;
+
+    //en esta funcionalidad si se tocan los registros por lo cual agregamos
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
+
+    public ProgramacionRiego(){
+
+    }
+
+    public ProgramacionRiego(int id_pg_riego, String descripcion, String tipo_riego, LocalDateTime fecha_inicio, LocalDateTime fecha_finalizacion, LocalDateTime created_at, LocalDateTime updated_at, Zona id_zona){
+        this.id_pg_riego = id_pg_riego;
+        this.descripcion = descripcion;
+        this.tipo_riego = tipo_riego;
+        this.fecha_inicio =fecha_inicio;
+        this.fecha_finalizacion = fecha_finalizacion;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+        this.id_zona = id_zona;
+
+    }
+
+    public int getId_pg_riego() {
+        return id_pg_riego;
+    }
+
+    public void setId_pg_riego(int id_pg_riego) {
+        this.id_pg_riego = id_pg_riego;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getTipo_riego() {
+        return tipo_riego;
+    }
+
+    public void setTipo_riego(String tipo_riego) {
+        this.tipo_riego = tipo_riego;
+    }
+
+    public LocalDateTime getFecha_inicio() {
+        return fecha_inicio;
+    }
+
+    public void setFecha_inicio(LocalDateTime fecha_inicio) {
+        this.fecha_inicio = fecha_inicio;
+    }
+
+    public LocalDateTime getFecha_finalizacion() {
+        return fecha_finalizacion;
+    }
+
+    public void setFecha_finalizacion(LocalDateTime fecha_finalizacion) {
+        this.fecha_finalizacion = fecha_finalizacion;
+    }
+
+    public Zona getId_zona() {
+        return id_zona;
+    }
+
+    public void setId_zona(Zona id_zona) {
+        this.id_zona = id_zona;
+    }
+
+    public LocalDateTime getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(LocalDateTime created_at) {
+        this.created_at = created_at;
+    }
+
+    public LocalDateTime getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(LocalDateTime updated_at) {
+        this.updated_at = updated_at;
+    }
+}
+

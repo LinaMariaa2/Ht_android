@@ -9,4 +9,7 @@ public interface ApiZona {
     @GET("api/zona")
     Call<List<Zona>> getZonas();
 
+    @GET("api/zona/invernadero/{id}")
+    Call<List<Zona>> getZonasPorInvernadero(@Path("id") int id);
 }
+
