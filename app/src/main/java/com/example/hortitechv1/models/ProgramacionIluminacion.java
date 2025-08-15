@@ -4,18 +4,19 @@ import java.time.LocalDateTime;
 
 public class ProgramacionIluminacion {
     private int id_iluminacion;
-    private Zona id_zona;
+    private int id_zona;
     private String descripcion;
     private LocalDateTime fecha_inicio;
     private LocalDateTime fecha_finalizacion;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
+    private boolean estado;
 
     //Constructor vacio
     public ProgramacionIluminacion(){
     }
 
-    public ProgramacionIluminacion(int id_iluminacion, Zona id_zona, String descripcion, LocalDateTime fecha_inicio, LocalDateTime fecha_finalizacion, LocalDateTime created_at, LocalDateTime updated_at){
+    public ProgramacionIluminacion(int id_iluminacion, int id_zona, String descripcion, LocalDateTime fecha_inicio, LocalDateTime fecha_finalizacion, LocalDateTime created_at, LocalDateTime updated_at, boolean estado){
         this.id_iluminacion = id_iluminacion;
         this.id_zona = id_zona;
         this.descripcion = descripcion;
@@ -23,6 +24,7 @@ public class ProgramacionIluminacion {
         this.fecha_finalizacion= fecha_finalizacion;
         this.created_at = created_at;
         this.updated_at = updated_at;
+        this.estado = estado;
     }
 
     public int getId_iluminacion() {
@@ -33,11 +35,11 @@ public class ProgramacionIluminacion {
         this.id_iluminacion = id_iluminacion;
     }
 
-    public Zona getId_zona() {
+    public int getId_zona() {
         return id_zona;
     }
 
-    public void setId_zona(Zona id_zona) {
+    public void setId_zona(int id_zona) {
         this.id_zona = id_zona;
     }
 
@@ -79,5 +81,13 @@ public class ProgramacionIluminacion {
 
     public void setUpdated_at(LocalDateTime updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 }

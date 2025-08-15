@@ -63,9 +63,11 @@ public class ZonaAdapter extends RecyclerView.Adapter<ZonaAdapter.ViewHolder> {
         // Botón para ir a programación de iluminación
         holder.btnIluminacion.setOnClickListener(v -> {
             Intent intent = new Intent(context, ProgramacionIluminacionActivity.class);
-            intent.putExtra("zona_id", zona.getId_zona());
+            intent.putExtra("zona_id", zona.getId_zona()); // pasamos el id_zona
             context.startActivity(intent);
         });
+
+
     }
 
     @Override

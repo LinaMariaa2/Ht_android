@@ -9,25 +9,27 @@ import retrofit2.Call;
 import retrofit2.http.*;
 
 public interface ApiProIluminacion {
-    @GET("api/programacionIluminacion/zonas/activas")
-    Call<List<Zona>> getZonasActivasParaESP32();
 
-    @GET("api/programacionIluminacion")
-    Call<List<ProgramacionIluminacion>> getTodasLasProgramaciones();
+        @GET("api/programacioniluminacion")
+        Call<List<ProgramacionIluminacion>> getTodasLasProgramaciones();
 
-    @GET("api/programacionIluminacion/{id}")
-    Call<ProgramacionIluminacion> getProgramacionPorId(@Path("id") int id);
+        @GET("api/programacioniluminacion/zona/{idZona}/futuras")
+        Call<List<ProgramacionIluminacion>> getProgramacionesFuturas(@Path("idZona") int idZona);
 
-    @POST("api/programacionIluminacion")
-    Call<ProgramacionIluminacion> crearProgramacion(@Body ProgramacionIluminacion programacion);
+        @GET("api/programacioniluminacion/{id}")
+        Call<ProgramacionIluminacion> getProgramacionPorId(@Path("id") int id);
 
-    @PUT("api/programacionIluminacion/{id}")
-    Call<ProgramacionIluminacion> actualizarProgramacion(
-            @Path("id") int id,
-            @Body ProgramacionIluminacion programacion
-    );
+        @POST("api/programacioniluminacion")
+        Call<ProgramacionIluminacion> crearProgramacion(@Body ProgramacionIluminacion programacion);
 
-    @DELETE("api/programacionIluminacion/{id}")
-    Call<Void> eliminarProgramacion(@Path("id") int id);
+        @PUT("api/programacioniluminacion/{id}")
+        Call<ProgramacionIluminacion> actualizarProgramacion(
+                @Path("id") int id,
+                @Body ProgramacionIluminacion programacion
+        );
+
+        @DELETE("api/programacioniluminacion/{id}")
+        Call<Void> eliminarProgramacion(@Path("id") int id);
+
 }
 

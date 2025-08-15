@@ -7,7 +7,9 @@ public class ProgramacionRiego {
     private String tipo_riego;
     private LocalDateTime fecha_inicio;
     private LocalDateTime fecha_finalizacion;
-    private Zona id_zona;
+    private int id_zona; //no como inst porque desde le back nos llega como #
+    private boolean estado;
+
 
     //en esta funcionalidad si se tocan los registros por lo cual agregamos
     private LocalDateTime created_at;
@@ -17,7 +19,7 @@ public class ProgramacionRiego {
 
     }
 
-    public ProgramacionRiego(int id_pg_riego, String descripcion, String tipo_riego, LocalDateTime fecha_inicio, LocalDateTime fecha_finalizacion, LocalDateTime created_at, LocalDateTime updated_at, Zona id_zona){
+    public ProgramacionRiego(int id_pg_riego, String descripcion, String tipo_riego, LocalDateTime fecha_inicio, LocalDateTime fecha_finalizacion, LocalDateTime created_at, LocalDateTime updated_at, int id_zona, boolean estado){
         this.id_pg_riego = id_pg_riego;
         this.descripcion = descripcion;
         this.tipo_riego = tipo_riego;
@@ -26,7 +28,7 @@ public class ProgramacionRiego {
         this.created_at = created_at;
         this.updated_at = updated_at;
         this.id_zona = id_zona;
-
+        this.estado = estado;
     }
 
     public int getId_pg_riego() {
@@ -69,12 +71,20 @@ public class ProgramacionRiego {
         this.fecha_finalizacion = fecha_finalizacion;
     }
 
-    public Zona getId_zona() {
+    public int getId_zona() {
         return id_zona;
     }
 
-    public void setId_zona(Zona id_zona) {
+    public void setId_zona(int id_zona) {
         this.id_zona = id_zona;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     public LocalDateTime getCreated_at() {

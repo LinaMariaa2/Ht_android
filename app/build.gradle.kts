@@ -28,6 +28,7 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+        isCoreLibraryDesugaringEnabled = true
     }
 }
 
@@ -42,7 +43,9 @@ dependencies {
 
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
 
-    implementation("androidx.recyclerview:recyclerview:1.4.0")
+
+    implementation(libs.recyclerview)
     implementation(libs.cardview)
 }
