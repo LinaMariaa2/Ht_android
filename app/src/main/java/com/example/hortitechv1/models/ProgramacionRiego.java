@@ -1,4 +1,5 @@
 package com.example.hortitechv1.models;
+
 import java.time.LocalDateTime;
 
 public class ProgramacionRiego {
@@ -7,23 +8,22 @@ public class ProgramacionRiego {
     private String tipo_riego;
     private LocalDateTime fecha_inicio;
     private LocalDateTime fecha_finalizacion;
-    private int id_zona; //no como inst porque desde le back nos llega como #
+    private int id_zona;
     private boolean estado;
 
-
-    //en esta funcionalidad si se tocan los registros por lo cual agregamos
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 
-    public ProgramacionRiego(){
+    public ProgramacionRiego() {}
 
-    }
-
-    public ProgramacionRiego(int id_pg_riego, String descripcion, String tipo_riego, LocalDateTime fecha_inicio, LocalDateTime fecha_finalizacion, LocalDateTime created_at, LocalDateTime updated_at, int id_zona, boolean estado){
+    public ProgramacionRiego(int id_pg_riego, String descripcion, String tipo_riego,
+                             LocalDateTime fecha_inicio, LocalDateTime fecha_finalizacion,
+                             LocalDateTime created_at, LocalDateTime updated_at,
+                             int id_zona, boolean estado) {
         this.id_pg_riego = id_pg_riego;
         this.descripcion = descripcion;
-        this.tipo_riego = tipo_riego;
-        this.fecha_inicio =fecha_inicio;
+        setTipo_riego(tipo_riego); // 👉 usamos el setter para validar
+        this.fecha_inicio = fecha_inicio;
         this.fecha_finalizacion = fecha_finalizacion;
         this.created_at = created_at;
         this.updated_at = updated_at;
@@ -51,8 +51,21 @@ public class ProgramacionRiego {
         return tipo_riego;
     }
 
+
     public void setTipo_riego(String tipo_riego) {
-        this.tipo_riego = tipo_riego;
+        if (tipo_riego == null) {
+            this.tipo_riego = null;
+        } else {
+            String lower = tipo_riego.toLowerCase();
+            if (lower.equals("goteo") || lower.equals("aspersión") || lower.equals("manual")) {
+                this.tipo_riego = lower;
+            } else {
+                throw new IllegalArgumentException(
+                        "Valor inválido para tipo_riego: " + tipo_riego +
+                                ". Solo se permiten: goteo, aspersión, manual."
+                );
+            }
+        }
     }
 
     public LocalDateTime getFecha_inicio() {
@@ -103,4 +116,3 @@ public class ProgramacionRiego {
         this.updated_at = updated_at;
     }
 }
-

@@ -17,7 +17,7 @@ import com.example.hortitechv1.models.ProgramacionIluminacion;
 import com.example.hortitechv1.network.ApiClient;
 import com.example.hortitechv1.network.ApiProIluminacion;
 
-import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,9 +44,10 @@ public class ProgramacionIluminacionActivity extends AppCompatActivity {
         btnNueva = findViewById(R.id.btnNuevaProgramacionIlu);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
+        // API
         api = ApiClient.getClient().create(ApiProIluminacion.class);
 
+        // Adapter con listeners
         adapter = new ProgramacionIlumiAdapter(
                 this,
                 listaProgramaciones,
@@ -64,8 +65,7 @@ public class ProgramacionIluminacionActivity extends AppCompatActivity {
         );
         recyclerView.setAdapter(adapter);
 
-        // Recibimos idZona guardarlo en la variable global
-
+        // Recibir idZona
         idZona = getIntent().getIntExtra("zona_id", -1);
         if (idZona != -1) {
             getProgramacionesFuturas();
@@ -73,37 +73,45 @@ public class ProgramacionIluminacionActivity extends AppCompatActivity {
             Toast.makeText(this, "No se recibió el ID de la zona", Toast.LENGTH_SHORT).show();
         }
 
-        // Botón para nueva programación si solo manejamos vistas desde la principal si no desde el adpter si vamos a mnejar datos
+        // Nueva programación
         btnNueva.setOnClickListener(v -> {
             Intent intent = new Intent(ProgramacionIluminacionActivity.this, FormProIluminacionActivity.class);
             intent.putExtra("zona_id", idZona);
             startActivity(intent);
         });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (idZona != -1) {
+            getProgramacionesFuturas(); // refrescar lista al volver
+        }
     }
 
     private void getProgramacionesFuturas() {
         api.getProgramacionesFuturas(idZona).enqueue(new Callback<List<ProgramacionIluminacion>>() {
             @Override
-
             public void onResponse(Call<List<ProgramacionIluminacion>> call, Response<List<ProgramacionIluminacion>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     listaProgramaciones.clear();
                     listaProgramaciones.addAll(response.body());
                     adapter.notifyDataSetChanged();
-                    Log.d("API_RESPONSE", "Programaciones: " + response.body().toString());
+                    Log.d("API_RESPONSE", "Programaciones recibidas: " + response.body().size());
                 } else {
                     Toast.makeText(ProgramacionIluminacionActivity.this,
                             "Error del servidor: " + response.code(),
                             Toast.LENGTH_SHORT).show();
-                    Log.d("API_RESPONSE", "Error: " + response.errorBody());
+                    Log.e("API_RESPONSE", "Error: " + response.errorBody());
                 }
             }
 
-
             @Override
             public void onFailure(Call<List<ProgramacionIluminacion>> call, Throwable t) {
-                Toast.makeText(ProgramacionIluminacionActivity.this, "Fallo de conexión: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(ProgramacionIluminacionActivity.this,
+                        "Fallo de conexión: " + t.getMessage(),
+                        Toast.LENGTH_LONG).show();
+                Log.e("API_RESPONSE", "Fallo: ", t);
             }
         });
     }
@@ -113,39 +121,37 @@ public class ProgramacionIluminacionActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(ProgramacionIluminacionActivity.this, "Programación eliminada", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProgramacionIluminacionActivity.this,
+                            "Programación eliminada",
+                            Toast.LENGTH_SHORT).show();
                     getProgramacionesFuturas();
                 } else {
-                    Toast.makeText(ProgramacionIluminacionActivity.this, "No se pudo eliminar", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProgramacionIluminacionActivity.this,
+                            "No se pudo eliminar",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(ProgramacionIluminacionActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(ProgramacionIluminacionActivity.this,
+                        "Error: " + t.getMessage(),
+                        Toast.LENGTH_LONG).show();
             }
         });
     }
 
     private void actualizarProgramacion(ProgramacionIluminacion p) {
-        p.setEstado(!p.isEstado());
-        p.setUpdated_at(LocalDateTime.now());
+        Intent intent = new Intent(this, FormProIluminacionActivity.class);
+        intent.putExtra("zona_id", idZona);
+        intent.putExtra("programacion_id", p.getId_iluminacion());
+        intent.putExtra("descripcion", p.getDescripcion());
 
-        api.actualizarProgramacion(p.getId_iluminacion(), p).enqueue(new Callback<ProgramacionIluminacion>() {
-            @Override
-            public void onResponse(Call<ProgramacionIluminacion> call, Response<ProgramacionIluminacion> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(ProgramacionIluminacionActivity.this, "Actualizado", Toast.LENGTH_SHORT).show();
-                    getProgramacionesFuturas();
-                } else {
-                    Toast.makeText(ProgramacionIluminacionActivity.this, "No se pudo actualizar", Toast.LENGTH_SHORT).show();
-                }
-            }
+        // Formato de fechas para el form
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        intent.putExtra("fecha_inicio", p.getFecha_inicio().format(formatter));
+        intent.putExtra("fecha_fin", p.getFecha_finalizacion().format(formatter));
 
-            @Override
-            public void onFailure(Call<ProgramacionIluminacion> call, Throwable t) {
-                Toast.makeText(ProgramacionIluminacionActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+        startActivity(intent);
     }
 }

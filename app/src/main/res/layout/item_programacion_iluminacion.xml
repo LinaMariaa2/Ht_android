@@ -54,7 +54,7 @@
                 android:layout_weight="0.5"
                 android:layout_marginEnd="8dp"
                 android:backgroundTint="@color/rojodetener"
-                android:text="Detener"
+                android:text="⛔ Detener"
                 android:textColor="@color/white" />
 
             <Button

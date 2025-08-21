@@ -45,6 +45,7 @@ dependencies {
     implementation(libs.converter.gson)
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 
+    implementation(libs.material.v190)
 
     implementation(libs.recyclerview)
     implementation(libs.cardview)

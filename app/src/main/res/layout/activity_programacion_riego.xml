@@ -1,19 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ProgramacionRiegoActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"    android:padding="16dp"
+    tools:context=".view.ProgramacionRiegoActivity">
 
     <TextView
+        android:id="@+id/tvTituloPrograRiego"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Programación Riego"
+        android:textSize="29sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="60dp"/>
+
+    <Button
+        android:id="@+id/btnNuevaProgramacionRiego"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Programacion Riego"
-        android:textSize="30sp"
-        android:layout_gravity="center"
-        android:layout_marginTop="60sp"/>
+        android:backgroundTint="@color/azul"
+        android:text="Nueva Programación"
+        android:textColor="@color/white"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvProgramacionRiego"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="8dp" />
 
 </LinearLayout>

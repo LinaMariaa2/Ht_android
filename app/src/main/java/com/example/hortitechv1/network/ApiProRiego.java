@@ -1,5 +1,6 @@
 package com.example.hortitechv1.network;
 
+import com.example.hortitechv1.models.ProgramacionIluminacion;
 import com.example.hortitechv1.models.ProgramacionRiego;
 import com.example.hortitechv1.models.Zona;
 
@@ -11,11 +12,7 @@ import retrofit2.http.*;
 public interface ApiProRiego {
     //Listamos todas las programaciones
     @GET("api/programacionRiego")
-    Call<List<ProgramacionRiego>> getProgramaciones();
-
-    // Obtener zonas activas para el ESP32
-    @GET("api/programacionRiego/zonas/activas")
-    Call<List<Zona>> getZonasRiegoActivas();
+    Call<List<ProgramacionRiego>> getProgramacionesRiego();
 
     @GET("api/programacionRiego/{id}")
     Call<ProgramacionRiego> getProgramacionPorId(@Path("id") int id);

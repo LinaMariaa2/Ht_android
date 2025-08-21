@@ -3,7 +3,7 @@ package com.example.hortitechv1.models;
 import java.time.LocalDateTime;
 
 public class ProgramacionIluminacion {
-    private int id_iluminacion;
+    private Integer id_iluminacion;
     private int id_zona;
     private String descripcion;
     private LocalDateTime fecha_inicio;
@@ -16,7 +16,7 @@ public class ProgramacionIluminacion {
     public ProgramacionIluminacion(){
     }
 
-    public ProgramacionIluminacion(int id_iluminacion, int id_zona, String descripcion, LocalDateTime fecha_inicio, LocalDateTime fecha_finalizacion, LocalDateTime created_at, LocalDateTime updated_at, boolean estado){
+    public ProgramacionIluminacion(Integer id_iluminacion, int id_zona, String descripcion, LocalDateTime fecha_inicio, LocalDateTime fecha_finalizacion, LocalDateTime created_at, LocalDateTime updated_at, boolean estado){
         this.id_iluminacion = id_iluminacion;
         this.id_zona = id_zona;
         this.descripcion = descripcion;
@@ -27,11 +27,11 @@ public class ProgramacionIluminacion {
         this.estado = estado;
     }
 
-    public int getId_iluminacion() {
+    public Integer getId_iluminacion() {
         return id_iluminacion;
     }
 
-    public void setId_iluminacion(int id_iluminacion) {
+    public void setId_iluminacion(Integer id_iluminacion) {
         this.id_iluminacion = id_iluminacion;
     }
 

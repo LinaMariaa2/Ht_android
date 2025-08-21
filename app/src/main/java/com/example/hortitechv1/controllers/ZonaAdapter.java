@@ -13,12 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hortitechv1.R;
 import com.example.hortitechv1.models.Invernadero;
-import com.example.hortitechv1.models.ProgramacionIluminacion;
-import com.example.hortitechv1.models.ProgramacionRiego;
 import com.example.hortitechv1.models.Zona;
 import com.example.hortitechv1.view.ProgramacionIluminacionActivity;
 import com.example.hortitechv1.view.ProgramacionRiegoActivity;
-import com.example.hortitechv1.view.ZonaActivity;
+
 
 import java.util.List;
 
