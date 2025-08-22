@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -179,24 +180,27 @@ public class FormProRiegoActivity extends AppCompatActivity {
             programacion.setEstado(true);
 
             api.crearProgramacion(programacion).enqueue(new Callback<ProgramacionRiego>() {
-                @Override
-                public void onResponse(Call<ProgramacionRiego> call, Response<ProgramacionRiego> response) {
+                @Override public void onResponse(Call<ProgramacionRiego> call, Response<ProgramacionRiego> response) {
                     if (response.isSuccessful()) {
-                        Toast.makeText(FormProRiegoActivity.this,
-                                "Programación de riego creada correctamente", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FormProRiegoActivity.this, "Programación de riego creada correctamente", Toast.LENGTH_SHORT).show();
                         volverALista();
                     } else {
-                        Toast.makeText(FormProRiegoActivity.this,
-                                "Error al crear: " + response.code(), Toast.LENGTH_SHORT).show();
+                        try {
+                            String err = response.errorBody() != null ? response.errorBody().string() : "sin errorBody";
+                            Log.e("API_CREATE", "HTTP " + response.code() + " -> " + err);
+                            Toast.makeText(FormProRiegoActivity.this, "Error al crear: " + err, Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+                            Log.e("API_CREATE", "No se pudo leer errorBody", e);
+                            Toast.makeText(FormProRiegoActivity.this, "Error al crear: " + response.code(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
-
-                @Override
-                public void onFailure(Call<ProgramacionRiego> call, Throwable t) {
-                    Toast.makeText(FormProRiegoActivity.this,
-                            "Fallo de conexión: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                @Override public void onFailure(Call<ProgramacionRiego> call, Throwable t) {
+                    Log.e("API_CREATE", "Fallo", t);
+                    Toast.makeText(FormProRiegoActivity.this, "Fallo de conexión: " + t.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
+
 
         } catch (Exception e) {
             Toast.makeText(this, "Formato de fecha incorrecto", Toast.LENGTH_SHORT).show();

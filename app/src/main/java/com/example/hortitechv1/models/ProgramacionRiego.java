@@ -3,7 +3,7 @@ package com.example.hortitechv1.models;
 import java.time.LocalDateTime;
 
 public class ProgramacionRiego {
-    private int id_pg_riego;
+    private Integer id_pg_riego;
     private String descripcion;
     private String tipo_riego;
     private LocalDateTime fecha_inicio;
@@ -16,7 +16,7 @@ public class ProgramacionRiego {
 
     public ProgramacionRiego() {}
 
-    public ProgramacionRiego(int id_pg_riego, String descripcion, String tipo_riego,
+    public ProgramacionRiego(Integer id_pg_riego, String descripcion, String tipo_riego,
                              LocalDateTime fecha_inicio, LocalDateTime fecha_finalizacion,
                              LocalDateTime created_at, LocalDateTime updated_at,
                              int id_zona, boolean estado) {
@@ -31,11 +31,11 @@ public class ProgramacionRiego {
         this.estado = estado;
     }
 
-    public int getId_pg_riego() {
+    public Integer getId_pg_riego() {
         return id_pg_riego;
     }
 
-    public void setId_pg_riego(int id_pg_riego) {
+    public void setId_pg_riego(Integer id_pg_riego) {
         this.id_pg_riego = id_pg_riego;
     }
 

@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="32dp"
         android:padding="24dp"
-        android:backgroundTint="@android:color/white"
         app:cardCornerRadius="24dp"
         app:cardElevation="16dp"
         android:layout_gravity="center">

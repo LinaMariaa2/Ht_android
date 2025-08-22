@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hortitechv1.R;
 import com.example.hortitechv1.controllers.ProgramacionRiegoAdapter;
+import com.example.hortitechv1.models.ProgramacionIluminacion;
 import com.example.hortitechv1.models.ProgramacionRiego;
 import com.example.hortitechv1.network.ApiClient;
 import com.example.hortitechv1.network.ApiProRiego;
@@ -68,7 +69,7 @@ public class ProgramacionRiegoActivity extends AppCompatActivity {
         // Recibir idZona
         idZona = getIntent().getIntExtra("zona_id", -1);
         if (idZona != -1) {
-            getProgramacionesRiego();
+            getProgramacionesFuturas();
         } else {
             Toast.makeText(this, "No se recibió el ID de la zona", Toast.LENGTH_SHORT).show();
         }
@@ -85,24 +86,36 @@ public class ProgramacionRiegoActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (idZona != -1) {
-            getProgramacionesRiego(); // refrescar lista al volver
+            getProgramacionesFuturas(); // refrescar lista al volver
         }
     }
 
-    private void getProgramacionesRiego() {
-        api.getProgramacionesRiego().enqueue(new Callback<List<ProgramacionRiego>>() {
+
+    private void getProgramacionesFuturas() {
+        api.getProgramacionesFuturas(idZona).enqueue(new Callback<List<ProgramacionRiego>>() {
             @Override
             public void onResponse(Call<List<ProgramacionRiego>> call, Response<List<ProgramacionRiego>> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    List<ProgramacionRiego> soloDeZona = new ArrayList<>();
+                    for (ProgramacionRiego p : response.body()) {
+                        if (p.getId_zona() == idZona) soloDeZona.add(p);
+                    }
                     listaProgramaciones.clear();
-                    listaProgramaciones.addAll(response.body());
+                    listaProgramaciones.addAll(soloDeZona);
                     adapter.notifyDataSetChanged();
-                    Log.d("API_RESPONSE", "Programaciones de riego recibidas: " + response.body().size());
+                    Log.d("API_RESPONSE", "Programaciones recibidas (filtradas): " + soloDeZona.size());
                 } else {
+                    try {
+                        String errorMsg = response.errorBody() != null ? response.errorBody().string() : "sin cuerpo";
+                        Log.e("API_RESPONSE", "Error: " + response.code() + " -> " + errorMsg);
+                        Toast.makeText(ProgramacionRiegoActivity.this, "Error: " + errorMsg, Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Log.e("API_RESPONSE", "No se pudo leer errorBody", e);
+                    }
+
                     Toast.makeText(ProgramacionRiegoActivity.this,
                             "Error del servidor: " + response.code(),
                             Toast.LENGTH_SHORT).show();
-                    Log.e("API_RESPONSE", "Error: " + response.errorBody());
                 }
             }
 
@@ -116,6 +129,7 @@ public class ProgramacionRiegoActivity extends AppCompatActivity {
         });
     }
 
+
     private void detenerProgramacion(ProgramacionRiego p) {
         api.eliminarProgramacion(p.getId_pg_riego()).enqueue(new Callback<Void>() {
             @Override
@@ -124,7 +138,7 @@ public class ProgramacionRiegoActivity extends AppCompatActivity {
                     Toast.makeText(ProgramacionRiegoActivity.this,
                             "Programación eliminada",
                             Toast.LENGTH_SHORT).show();
-                    getProgramacionesRiego();
+                    getProgramacionesFuturas();
                 } else {
                     Toast.makeText(ProgramacionRiegoActivity.this,
                             "No se pudo eliminar",

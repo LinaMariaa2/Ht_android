@@ -13,7 +13,8 @@ public interface ApiProRiego {
     //Listamos todas las programaciones
     @GET("api/programacionRiego")
     Call<List<ProgramacionRiego>> getProgramacionesRiego();
-
+    @GET("api/programacionRiego/zona/{idZona}/futuras")
+    Call<List<ProgramacionRiego>> getProgramacionesFuturas(@Path("idZona") int idZona);
     @GET("api/programacionRiego/{id}")
     Call<ProgramacionRiego> getProgramacionPorId(@Path("id") int id);
 

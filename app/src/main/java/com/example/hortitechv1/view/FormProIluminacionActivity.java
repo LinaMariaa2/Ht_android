@@ -44,7 +44,7 @@ public class FormProIluminacionActivity extends AppCompatActivity {
         etDescripcion = findViewById(R.id.etP);
         etFechaInicio = findViewById(R.id.etFechaInicio);
         etFechaFin = findViewById(R.id.etFechaFin);
-        btnAccion = findViewById(R.id.btnCrear);   // se usará para Crear o Actualizar
+        btnAccion = findViewById(R.id.btnCrear);
         btnCancelar = findViewById(R.id.btnCancelarFormI);
         tvTitulo = findViewById(R.id.tvTituloForm);
 
@@ -82,7 +82,6 @@ public class FormProIluminacionActivity extends AppCompatActivity {
         etFechaInicio.setOnClickListener(v -> mostrarDateTimePicker(etFechaInicio));
         etFechaFin.setOnClickListener(v -> mostrarDateTimePicker(etFechaFin));
 
-        // Botón cancelar → volver al listado
         btnCancelar.setOnClickListener(v -> {
             Intent intent = new Intent(FormProIluminacionActivity.this, ProgramacionIluminacionActivity.class);
             intent.putExtra("zona_id", idZona);

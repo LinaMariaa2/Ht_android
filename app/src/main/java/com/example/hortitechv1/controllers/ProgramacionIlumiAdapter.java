@@ -27,7 +27,7 @@ public class ProgramacionIlumiAdapter extends RecyclerView.Adapter<ProgramacionI
     // formatea las fechas
     private static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-    //definimos las acciones estaran en cada item
+    //definimos las acciones estaran en cada item osea los btnes
     public interface OnItemClickListener {
         void onActualizarClick(ProgramacionIluminacion programacion);
         void onDetenerClick(ProgramacionIluminacion programacion);
