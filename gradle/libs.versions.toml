@@ -13,6 +13,8 @@ materialVersion = "1.9.0"
 recyclerview = "1.4.0"
 retrfoit = "2.9.0"
 threetenabp = "1.4.6"
+glide = "4.16.0"
+
 
 [libraries]
 cardview = { module = "androidx.cardview:cardview", version.ref = "cardview" }
@@ -30,6 +32,7 @@ recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "r
 retrfoit = { module = "com.squareup.retrofit2:retrfoit", version.ref = "retrfoit" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrfoit" }
 threetenabp = { module = "com.jakewharton.threetenabp:threetenabp", version.ref = "threetenabp" }
+github-glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

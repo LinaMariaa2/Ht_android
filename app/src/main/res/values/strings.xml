@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">HortitechV1</string>
+    <string name="app_name">HortiTechApp</string>
+    <string name="navigation_drawer_open">Abrir panel de navegación</string>
+    <string name="navigation_drawer_close">Cerrar panel de navegación</string>
 </resources>

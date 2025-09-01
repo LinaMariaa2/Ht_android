@@ -1,22 +1,37 @@
 package com.example.hortitechv1.view;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hortitechv1.R;
 import com.example.hortitechv1.controllers.ProgramacionRiegoAdapter;
-import com.example.hortitechv1.models.ProgramacionIluminacion;
 import com.example.hortitechv1.models.ProgramacionRiego;
 import com.example.hortitechv1.network.ApiClient;
 import com.example.hortitechv1.network.ApiProRiego;
+import com.google.android.material.navigation.NavigationView;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -26,7 +41,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProgramacionRiegoActivity extends AppCompatActivity {
+public class ProgramacionRiegoActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private RecyclerView recyclerView;
     private Button btnNueva;
@@ -35,10 +50,29 @@ public class ProgramacionRiegoActivity extends AppCompatActivity {
     private ApiProRiego api;
     private int idZona;
 
+    private DrawerLayout drawerLayout;
+    private LinearLayout mainContentContainer;
+    private static final float END_SCALE = 0.8f;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_programacion_riego);
+
+        // Configuración del Toolbar y DrawerLayout
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        mainContentContainer = findViewById(R.id.main_content_container);
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+
+        setupDrawerAnimation(toolbar);
+        navigationView.setNavigationItemSelectedListener(this);
+        styleLogoutMenuItem(navigationView.getMenu());
+
+        // Asegúrate de que el elemento correcto del menú está seleccionado
+        navigationView.setCheckedItem(R.id.nav_greenhouses);
 
         // Views
         recyclerView = findViewById(R.id.rvProgramacionRiego);
@@ -129,7 +163,6 @@ public class ProgramacionRiegoActivity extends AppCompatActivity {
         });
     }
 
-
     private void detenerProgramacion(ProgramacionRiego p) {
         api.eliminarProgramacion(p.getId_pg_riego()).enqueue(new Callback<Void>() {
             @Override
@@ -168,5 +201,72 @@ public class ProgramacionRiegoActivity extends AppCompatActivity {
         intent.putExtra("fecha_fin", p.getFecha_finalizacion().format(formatter));
 
         startActivity(intent);
+    }
+    // --- Lógica del DrawerLayout ---
+    private void setupDrawerAnimation(Toolbar toolbar) {
+        drawerLayout.setScrimColor(Color.TRANSPARENT);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+                final float scale = 1 - (1 - END_SCALE) * slideOffset;
+                mainContentContainer.setScaleX(scale);
+                mainContentContainer.setScaleY(scale);
+                final float xOffset = drawerView.getWidth() * slideOffset;
+                mainContentContainer.setTranslationX(xOffset);
+            }
+        };
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        new android.os.Handler().postDelayed(() -> {
+            if (itemId == R.id.nav_home) {
+                startActivity(new Intent(ProgramacionRiegoActivity.this, HomeActivity.class));
+            } else if (itemId == R.id.nav_greenhouses) {
+                startActivity(new Intent(ProgramacionRiegoActivity.this, InvernaderoActivity.class));
+            } else if (itemId == R.id.nav_crops) {
+                startActivity(new Intent(ProgramacionRiegoActivity.this, CultivosActivity.class));
+            } else if (itemId == R.id.nav_log) {
+                startActivity(new Intent(ProgramacionRiegoActivity.this, BitacoraActivity.class));
+            } else if (itemId == R.id.nav_settings) {
+                startActivity(new Intent(ProgramacionRiegoActivity.this, PerfilActivity.class));
+            }
+        }, 250);
+
+        if (itemId == R.id.nav_logout) {
+            Toast.makeText(this, "Cerrando sesión...", Toast.LENGTH_SHORT).show();
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    private void styleLogoutMenuItem(Menu menu) {
+        MenuItem logoutItem = menu.findItem(R.id.nav_logout);
+        if (logoutItem != null) {
+            SpannableString s = new SpannableString(logoutItem.getTitle());
+            s.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorError)), 0, s.length(), 0);
+            logoutItem.setTitle(s);
+            Drawable icon = logoutItem.getIcon();
+            if (icon != null) {
+                Drawable wrappedIcon = DrawableCompat.wrap(icon);
+                DrawableCompat.setTint(wrappedIcon, ContextCompat.getColor(this, R.color.colorError));
+                logoutItem.setIcon(wrappedIcon);
+            }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

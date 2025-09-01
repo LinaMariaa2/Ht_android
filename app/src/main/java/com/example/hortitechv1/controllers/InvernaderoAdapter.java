@@ -7,16 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hortitechv1.R;
 import com.example.hortitechv1.models.Invernadero;
-import com.example.hortitechv1.models.Persona;
 import com.example.hortitechv1.view.ZonaActivity;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializer;
 
 import java.util.List;
 
@@ -45,14 +40,10 @@ public class InvernaderoAdapter extends RecyclerView.Adapter<InvernaderoAdapter.
         holder.tvDescripcion.setText(inv.getDescripcion());
         holder.tvZonasTotales.setText("Zonas totales: " + inv.getZonas_totales());
         holder.tvZonasActivas.setText("Zonas activas: " + inv.getZonas_activas());
-        if (inv.getEncargado() != null) {
-            holder.tvResponsable.setText("Responsable: " + inv.getEncargado().getNombre_usuario());
-        } else {
-            holder.tvResponsable.setText("Sin responsable");
-        }
 
+        // CORRECCIÓN: El método getEncargado() no existe. Usamos getResponsable_id().
+        holder.tvResponsable.setText("Responsable ID: " + inv.getResponsable_id());
 
-        // Acción para abrir zonas especificas de cad invernad
         holder.btnZonas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

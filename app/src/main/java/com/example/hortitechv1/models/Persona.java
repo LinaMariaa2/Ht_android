@@ -1,6 +1,8 @@
 package com.example.hortitechv1.models;
 
-public class Persona {
+import java.io.Serializable;
+
+public class Persona implements Serializable {
     private int id_persona;
     private String nombre_usuario;
     private String correo;
@@ -13,8 +15,14 @@ public class Persona {
     private String verificationCode;
     //private time verificationCodeExpires;
     private int intentos;
+    private Perfil perfil;
+
 
     public Persona() {
+    }
+    @Override
+    public String toString() {
+        return nombre_usuario;
     }
 
     public Persona(int id_persona,String nombre_usuario, String correo, String contrasena, Rol rol, Estado estado,boolean isVerified,String verificationCode, int intentos ) {
@@ -99,5 +107,12 @@ public class Persona {
 
     public void setIntentos(int intentos) {
         this.intentos = intentos;
+    }
+    public Perfil getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
     }
 }

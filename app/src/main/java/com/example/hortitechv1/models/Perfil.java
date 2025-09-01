@@ -1,6 +1,8 @@
 package com.example.hortitechv1.models;
 
-public class Perfil {
+import java.io.Serializable;
+
+public class Perfil implements Serializable {
     private int id_perfil;
     private Persona id_persona; //lave foranea Persona
     private String nombre_usuario;

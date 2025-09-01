@@ -1,6 +1,8 @@
 package com.example.hortitechv1.models;
 
-public class Zona {
+import java.io.Serializable;
+
+public class Zona implements Serializable {
     public enum Estado_iluminacion{
         activo, inactivo
     }

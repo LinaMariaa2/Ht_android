@@ -42,6 +42,8 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     implementation(libs.retrofit)
+    implementation(libs.github.glide)
+
     implementation(libs.converter.gson)
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 
